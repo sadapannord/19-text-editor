@@ -18,7 +18,7 @@ export const putDb = async (content) => {
   const contactDb = await openDB("jate", 1);
   const tx = contactDb.transaction("jate", "readwrite");
   const store = tx.objectStore("jate");
-  const request = store.add({ jate: content });
+  const request = store.put({ jate: content });
   const result = await request;
   console.log("Data saved to the database", result);
 };
@@ -36,7 +36,7 @@ export const getDb = async () => {
   const store = tx.objectStore("jate");
 
   // Use the .getAll() method to get all data in the database.
-  const request = store.getAll();
+  const request = store.get(1);
 
   // Get confirmation of the request.
   const result = await request;
