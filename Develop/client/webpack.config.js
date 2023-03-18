@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackPwaManifest = require("webpack-pwa-manifest");
 const path = require("path");
 const { InjectManifest } = require("workbox-webpack-plugin");
+const { GenerateSW } = require("workbox-webpack-plugin");
 
 module.exports = () => {
   return {
@@ -10,7 +11,7 @@ module.exports = () => {
     entry: {
       main: "./src/js/index.js",
       install: "./src/js/install.js",
-      cards: "./src/js/cards.js",
+      // cards: "./src/js/cards.js",
     },
     // Output for our bundles
     output: {
@@ -18,10 +19,11 @@ module.exports = () => {
       path: path.resolve(__dirname, "dist"),
     },
     plugins: [
+      new GenerateSW(),
       // Webpack plugin that generates our html file and injects our bundles.
       new HtmlWebpackPlugin({
         template: "./index.html",
-        title: "Contact Cards",
+        title: "Notes",
       }),
 
       // Injects our custom service worker
@@ -34,9 +36,9 @@ module.exports = () => {
       new WebpackPwaManifest({
         fingerprints: false,
         inject: true,
-        name: "Contact Cards",
-        short_name: "Contact",
-        description: "Never forget your contacts!",
+        // name: "Contact Cards",
+        short_name: "Manifest",
+        description: "Note Taker!",
         background_color: "#225ca3",
         theme_color: "#225ca3",
         start_url: "./",
